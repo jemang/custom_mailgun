@@ -11,7 +11,7 @@ class Event < ApplicationRecord
     unless result.nil?
       mail_data = JSON.parse(result.body)['stats']
       mail_data.each do |mail|
-        record = Event.find_or_create_by(date: mail['time'].to_date)
+        record = Event.find_or_create_by(date: mail['time'].to_date, kind: 'daily')
         if record.persisted?
           record.delivered = mail['delivered']['total']
           record.suppressed = mail['failed']['permanent']['suppress-bounce']
