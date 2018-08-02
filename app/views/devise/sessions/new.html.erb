@@ -1,0 +1,30 @@
+
+<div class="wrap-login100">
+  <div class="login100-pic js-tilt">
+    <img src="/images/img-01.png" alt="IMG">
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <span class="login100-form-title">
+      <h4>Member Login</h4>
+    </span>
+
+    <div class="wrap-input100 validate-input">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input100", placeholder: "Email" %>
+    </div>
+
+    <div class="wrap-input100 validate-input">
+      <%= f.password_field :password, autocomplete: "off", class: "input100", placeholder: "Password" %>
+    </div>
+
+    <div class="container-login100-form-btn">
+      <%= f.submit "Login", class: "login100-form-btn" %>
+    </div>
+
+    <div class="text-center p-t-12">
+      <%= render "devise/shared/links" %>
+    </div>
+
+    <div class="text-center p-t-136"> </div>
+  <% end %>
+</div>

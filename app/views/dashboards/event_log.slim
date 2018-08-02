@@ -1,0 +1,51 @@
+css:
+  li, a {
+    color: #212529;
+  }
+  a:hover {
+    color: #f3f2f0;
+  }
+
+.float-right
+  input type="text" style="width: 210px" class="form-control" name="daterange" value="#{@end.strftime('%m/%d/%Y')} - #{@begin.strftime('%m/%d/%Y')}"
+br
+br
+ul class="nav nav-tabs"
+  li class="nav-item" style="background-color: #00D39C;"
+    = link_to "Delivered", logs_path(section: "delivered"), id: "delivered", class: "nav-link"
+  li class="nav-item" style="background-color: #4da3ff;"
+    = link_to "Opened", logs_path(section: "opened"), id: "opened", class: "nav-link"
+  li class="nav-item" style="background-color: #F76A37;"
+    = link_to "Failed", logs_path(section: "failed"), id: "failed", class: "nav-link"
+
+- source_url = url_for(section: @section, format: :json)
+br
+.card
+  .card-body
+    table#dttb-customize.table.display.no-wrap.responsive data-sort="true" data-info="false" data-paging="true" data-source="#{source_url}" data-order=[[0, "desc"]]
+      thead
+        tr
+          th data-data="date" data-sortable="true" width="220px;" Date / Time
+          th data-data="stat" data-sortable="false" Status
+          th data-data="email" data-sortable="false" From
+          th data-data="user" data-sortable="false" Recipient
+          - if @section == "failed"
+            th data-data="reason" data-sortable="false" Reason
+          th data-data="subject" data-sortable="false" Subject
+
+
+javascript:
+  var section = "#{@section}";
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    begin = start.format('YYYY-MM-DD')
+    end = end.format('YYYY-MM-DD')
+    new_url = "#{source_url}" + "&begin=" + begin + "&end=" + end
+    $("#dttb-customize").DataTable().ajax.url(new_url)
+    $("#dttb-customize").DataTable().ajax.reload();
+  });
+
+  $("#"+section).addClass( "active" );
+

@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title Mailgun
+    = csrf_meta_tags
+    
+    / = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'login'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+ 
+  body
+    div class="limiter"
+      p style="color: #f55766; text-align: center;" class="alert" = alert
+      div class="container-login100"
+        = yield

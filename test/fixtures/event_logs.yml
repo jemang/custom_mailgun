@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2018-07-30 20:43:04
+  status: MyString
+  email_from: MyString
+  email_to: MyString
+  reason: MyString
+  subject: MyText
+  mailgun_id: MyString
+
+two:
+  date: 2018-07-30 20:43:04
+  status: MyString
+  email_from: MyString
+  email_to: MyString
+  reason: MyString
+  subject: MyText
+  mailgun_id: MyString

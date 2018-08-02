@@ -1,0 +1,16 @@
+// $primary:       #FFCF06;
+$secondary:     #520117;
+// $primary:       #37474f;
+$primary:         #10B9D2;
+
+@import "bootswatch/minty/variables";
+@import "bootstrap";
+@import "bootswatch/minty/bootswatch";
+@import "daterangepicker";
+@import "sb-admin";
+@import "font-awesome";
+@import "datatables";
+
+input, button, select, optgroup, textarea {
+  width: 200px;
+}
