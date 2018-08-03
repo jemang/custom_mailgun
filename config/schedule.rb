@@ -16,6 +16,9 @@
 every 5.minute do
   runner "EventLog.import", :environment => 'development'
   runner "Event.import_daily", :environment => 'development'
-  runner "Event.import_monthly", :environment => 'development'
   runner "Bounce.import", :environment => 'development'
+end
+
+every 1.day, at: '2:30 am' do
+  runner "Event.import_monthly", :environment => 'development'
 end
