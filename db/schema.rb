@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_045003) do
+ActiveRecord::Schema.define(version: 2018_08_02_063514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,18 @@ ActiveRecord::Schema.define(version: 2018_08_01_045003) do
     t.integer "suppressed", default: 0
     t.integer "failed", default: 0
     t.integer "kind", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "domain"
+    t.string "api_key"
+    t.string "ip_address"
+    t.string "smtp_hostname"
+    t.string "smtp_login"
+    t.string "api_url"
+    t.string "default_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

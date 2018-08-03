@@ -1,0 +1,64 @@
+css:
+  .close {
+    width: 15%;
+  }
+
+ol class="breadcrumb"
+  li class="breadcrumb-item"
+    = link_to "Dashboard", root_path
+  li class="breadcrumb-item active" Mailgun Setting
+.card
+  .card-body
+    table#dttb-settings.responsive.nowrap.table.table-hover data-sort="false" data-source="#{url_for(format: :json)}" data-responsive="false" data-paging="false" data-info="false" data-searching="false"
+      thead
+        tr
+          th data-data="domain" Domain
+          th data-data="api_key" Api Key
+          th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"
+
+br
+.card
+  .card-header
+    | Mailgun Info
+    .float-right
+      button#info-btn class="btn btn-success" onclick="showPopup()"
+        i class="fa fa-arrow-circle-down" &nbsp; Open
+  - if session[:verified] && (session[:expired_at] && session[:expired_at] > Time.now)
+    .card-body
+      .row
+        .col-md-3
+          p Domain
+          p Api Key
+          p IP Address
+          p SMTP Hostname
+          p Default SMTP Login
+          p API Base URL
+          p Default Password
+        .col-md-6
+          p = @settings.last.try(:domain)
+          p = @settings.last.try(:api_key)
+          p = @settings.last.try(:ip_address)
+          p = @settings.last.try(:smtp_hostname)
+          p = @settings.last.try(:smtp_login)
+          p = @settings.last.try(:api_url)
+          p = @settings.last.try(:default_password)
+
+br
+#token.modal.fade aria-hidden="true" aria-labelledby="modal" role="dialog"
+  - @setting = @settings.last
+  = render 'token'
+
+
+javascript:
+  $(document).ready(function(){
+    $("#info").on("hide.bs.collapse", function(){
+      $("#info-btn").html('<i class="fa fa-arrow-circle-down"></i> Open');
+    });
+    $("#info").on("show.bs.collapse", function(){
+      $("#info-btn").html('<i class="fa fa-arrow-circle-up"></i> Close');
+    });
+  });
+
+  function showPopup(){
+    $('#token:not(.show)').modal('show');
+  }

@@ -1,0 +1,51 @@
+css:
+  .close {
+    width: 15%;
+  }
+
+.modal-dialog.modal-dialog-centered.modal-md
+  .modal-content
+    = form_for @setting do |f|
+      .modal-header
+        h5.modal-title
+          | Setting
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        - if @setting.errors.any?
+          #error_explanation
+            h2 = "#{pluralize(@setting.errors.count, "error")} prohibited this setting from being saved:"
+            ul
+              - @setting.errors.full_messages.each do |message|
+                li = message
+        .field
+          = f.label :domain
+          = f.text_field :domain, class: "form-control"
+        br
+        .field
+          = f.label :api_key
+          = f.text_field :api_key, class: "form-control"
+        - unless @setting.id
+          br
+          .field
+            = f.label :ip_address
+            = f.text_field :ip_address, class: "form-control"
+          br
+          .field
+            = f.label :smtp_hostname
+            = f.text_field :smtp_hostname, class: "form-control"
+          br
+          .field
+            = f.label :smtp_login
+            = f.text_field :smtp_login, class: "form-control"
+          br
+          .field
+            = f.label :api_url
+            = f.text_field :api_url, class: "form-control"
+          br
+          .field
+            = f.label :default_password
+            = f.text_field :default_password, class: "form-control"
+      .modal-footer
+        button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" Close
+        = f.submit "Submit", class: "btn btn-primary btn-sm"

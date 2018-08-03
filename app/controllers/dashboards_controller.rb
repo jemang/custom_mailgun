@@ -1,16 +1,13 @@
 class DashboardsController < ApplicationController
   
   def index
+    @date = Date.today
+    @begin = params[:begin].nil? ? (@date - 30.days) : params[:begin].to_date
+    @end = params[:end].nil? ? @date : params[:end].to_date
     respond_to do |format|
-      format.html do
-        total = Event.where(kind: "month")
-        @delivered = total.map{ |x| x.delivered }.sum
-        @bounce = total.map{ |x| x.failed }.sum
-        @delay = total.map{ |x| x.suppressed }.sum
-      end
+      format.html
       format.json do
-        date = Date.today
-        @mail_data = Event.where(kind: 'daily').between_times(date - 30.days, date, field: :date)
+        @mail_data = Event.where(kind: 'daily').between_times(@begin, @end, field: :date)
       end
     end
   end
@@ -23,10 +20,6 @@ class DashboardsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        # @result = @mg_client.get("#{@domain}/events",
-        #   {event: @section, begin: @begin.to_date.rfc2822, end: @end.to_date.rfc2822, limit: 300}
-        # )
-        # @logs = JSON.parse(@result.body)['items']
         @logs = EventLog.where(status: @section).between_times(@end, @begin + 1.days, field: :date).order(date: :desc)
       end
     end

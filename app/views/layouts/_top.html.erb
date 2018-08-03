@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-shadow fixed-top" id="mainNav">
   <%# link_to "@Mailgun", root_path, class: "navbar-brand" %>
   <img src="/images/mailgun.svg" height="32" width="120" alt="IMG">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,11 @@
           <i class="fa fa-user-circle fa-fw"></i> <%= current_user.email%>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
+          <% if Setting.any? %>
+            <%= link_to "Setting", settings_path, class: "dropdown-item" %>
+          <% else %>
+            <%= link_to 'Setting', new_setting_path, data: {remote: true}, class: 'dropdown-item' %>
+          <% end %>
           <div class="dropdown-divider"></div>
           <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item", :data => {:confirm => 'Are You Sure Want to Log Out?'} %>
         </div>

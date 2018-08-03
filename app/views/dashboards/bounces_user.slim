@@ -1,3 +1,8 @@
+ol class="breadcrumb"
+  li class="breadcrumb-item"
+    = link_to "Dashboard", root_path
+  li class="breadcrumb-item active" Bounces Email
+
 .card
   .card-body
     table#dttb-customize.table.table-sm.no-wrap.responsive data-sort="true" data-info="false" data-responsive="false" data-paging="true" data-source="#{url_for(format: :json)}" data-order=[[0, "desc"]]

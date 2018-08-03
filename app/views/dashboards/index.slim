@@ -12,7 +12,7 @@ div class="row"
           i class="fa fa-home"
         
         div class="mr-5"
-          h3 = (@delivered + @delay + @bounce)
+          h3#total
       / a class="card-footer text-white clearfix small z-1" href="#"
       span class="card-footer text-white clearfix small z-1"
         span class="float-left" Total
@@ -26,7 +26,7 @@ div class="row"
           i class="fa fa-envelope-open"
         
         div class="mr-5" 
-          h3 = @delivered
+          h3#t_delivered
       
       span class="card-footer text-white clearfix small z-1"
         span class="float-left" Delivered
@@ -40,7 +40,7 @@ div class="row"
           i class="fa fa-history"
         
         div class="mr-5"
-          h3 = @delay
+          h3#t_suppressed
       
       span class="card-footer text-white clearfix small z-1"
         span class="float-left" Suppressed
@@ -55,7 +55,7 @@ div class="row"
           i class="fa fa-ban"
         
         div class="mr-5"
-          h3 = @bounce
+          h3#t_dropped
       
       span class="card-footer text-white clearfix small z-1"
         span class="float-left" Dropped
@@ -71,6 +71,10 @@ br
     xtitle: " ", ytitle: "Email Count", id: "chart2"
 
 br
+.float-right
+  input type="text" style="width: 210px" class="form-control" name="daterange" value="#{@begin.strftime('%m/%d/%Y')} - #{@end.strftime('%m/%d/%Y')}"
+br
+- source_url = url_for(format: :json)
 br
 .card
   .card-body
@@ -87,10 +91,25 @@ br
   
 javascript:
   var chart = Chartkick.charts["chart2"]
+  var section = "#{@section}";
   $('#chart2').hide();
   var table = $('#dttb-dashboard').DataTable();
   table.on( 'xhr' , function (){
     var json = table.ajax.json();
     chart.updateData(json.chart.data)
+    $('#total').html(json.chart.t_total)
+    $('#t_delivered').html(json.chart.t_del)
+    $('#t_suppressed').html(json.chart.t_sup)
+    $('#t_dropped').html(json.chart.t_fail)
     $('#chart2').show();
   })
+  
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    begin = start.format('YYYY-MM-DD')
+    end = end.format('YYYY-MM-DD')
+    new_url = "#{source_url}" + "&begin=" + begin + "&end=" + end
+    $("#dttb-dashboard").DataTable().ajax.url(new_url)
+    $("#dttb-dashboard").DataTable().ajax.reload();
+  });
