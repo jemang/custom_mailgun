@@ -14,7 +14,7 @@ ol class="breadcrumb"
         tr
           th data-data="domain" Domain
           / th data-data="api_key" Api Key
-          th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"
+          / th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"
 
 br
 .card
@@ -42,6 +42,9 @@ br
           p = @settings.last.try(:smtp_login)
           p = @settings.last.try(:api_url)
           p = @settings.last.try(:default_password)
+      br
+      .float-right
+        = link_to 'Edit', edit_setting_path(@settings.first), data: {remote: true}, class: 'btn btn-primary'
 
 br
 #token.modal.fade aria-hidden="true" aria-labelledby="modal" role="dialog"
