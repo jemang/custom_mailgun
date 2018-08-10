@@ -1,3 +1,4 @@
+env :PATH, ENV['PATH']
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -13,12 +14,13 @@
 #   rake "some:great:rake:task"
 # end
 #
+set :environment, :development
 every 5.minute do
-  runner "EventLog.import", :environment => 'development'
-  runner "Event.import_daily", :environment => 'development'
-  runner "Bounce.import", :environment => 'development'
+  runner "EventLog.import"
+  runner "Event.import_daily"
+  runner "Bounce.import"
 end
 
 every 1.day, at: '2:30 am' do
-  runner "Event.import_monthly", :environment => 'development'
+  runner "Event.import_monthly"
 end

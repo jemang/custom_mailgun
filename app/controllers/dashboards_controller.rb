@@ -7,7 +7,7 @@ class DashboardsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @mail_data = Event.where(kind: 'daily').between_times(@begin, @end, field: :date)
+        @mail_data = Event.where(kind: 'daily').between_times(@begin, @end, field: :date).order(:date)
       end
     end
   end

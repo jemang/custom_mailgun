@@ -22,7 +22,7 @@ json.set! :chart do
   mail_array = [{name: "Delivered", data: @data_delivered},
     {name: "Suppressed", data: @data_suppressed},
     {name: "Dropped", data: @data_dropped}]
-  json.data mail_array
+  json.data_graph mail_array
   json.t_del @mail_data.map{|x| x.delivered }.sum
   json.t_sup @mail_data.map{|x| x.suppressed }.sum
   json.t_fail @mail_data.map{|x| x.failed }.sum

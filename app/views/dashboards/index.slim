@@ -96,7 +96,7 @@ javascript:
   var table = $('#dttb-dashboard').DataTable();
   table.on( 'xhr' , function (){
     var json = table.ajax.json();
-    chart.updateData(json.chart.data)
+    chart.updateData(json.chart.data_graph)
     $('#total').html(json.chart.t_total)
     $('#t_delivered').html(json.chart.t_del)
     $('#t_suppressed').html(json.chart.t_sup)
