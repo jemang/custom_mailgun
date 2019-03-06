@@ -16,13 +16,18 @@ class EventLog < ApplicationRecord
           puts event
           record = EventLog.find_by(mailgun_id: event['id'])
           if record.nil?
+	    if event['delivery-status'].present?
+		msg = event['delivery-status']['message']
+	    else
+		msg = event['reason']
+            end
             EventLog.create(
               date: Time.at(event['timestamp']),
               mailgun_id: event['id'],
               status: event['event'],
               email_from: event['message']['headers']['from'],
               email_to: event['recipient'],
-              reason: event['reason'],
+              reason: msg,
               subject: event['message']['headers']['subject']
             )
           end
@@ -49,13 +54,18 @@ class EventLog < ApplicationRecord
           logs.each do |event|
             record = EventLog.find_by(mailgun_id: event['id'])
             if record.nil?
+	      if event['delivery-status'].present?
+                msg = event['delivery-status']['message']
+              else
+                msg = event['reason']
+              end
               EventLog.create(
                 date: Time.at(event['timestamp']),
                 mailgun_id: event['id'],
                 status: event['event'],
                 email_from: event['message']['headers']['from'],
                 email_to: event['recipient'],
-                reason: event['reason'],
+                reason: msg,
                 subject: event['message']['headers']['subject']
               )
             end
