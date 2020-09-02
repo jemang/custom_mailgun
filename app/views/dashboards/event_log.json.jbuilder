@@ -1,6 +1,6 @@
 json.set! :data do
   json.array!(@logs) do |log|
-    json.date log.date.strftime('%m/%d/%Y at %H:%M:%S')
+    json.date log.date.strftime('%Y/%m/%d at %H:%M:%S')
     # json.date log.date
     json.mailgun_id log.mailgun_id
     json.stat log.status
