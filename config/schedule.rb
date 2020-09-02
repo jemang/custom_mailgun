@@ -13,10 +13,16 @@ set :output, "/home/system/mailgun_user/log/cron.log"
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
+
 #
-set :environment, :development
-every 5.minute do
+set :job_template, "DISABLE_SPRING=1 /bin/bash -l -c ':job'"
+set :environment, :production
+
+every 1.minute do
   runner "EventLog.import"
+end
+
+every 10.minute do
   runner "Event.import_daily"
   runner "Bounce.import"
 end
